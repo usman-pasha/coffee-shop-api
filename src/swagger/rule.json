@@ -1,0 +1,108 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+      "version": "1.0",
+      "title": "Node JS AND Mongoose database"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:4000/api/v1"
+      }
+    ],
+    "components": {
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      }
+    },
+    "paths": {
+      "/": {
+        "get": {
+          "tags": ["Authentication"],
+          "summary": "Health CheckUp",
+          "description": "User Registrations",
+          "responses": {}
+        }
+      },
+      "/register": {
+        "post": {
+          "tags": ["Authentication"],
+          "summary": "User Authentication",
+          "description": "User Registrations",
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/register"
+                }
+              }
+            }
+          },
+          "responses": {}
+        }
+      },
+      "/login": {
+        "post": {
+          "tags": ["Authentication"],
+          "summary": "User Authentication",
+          "description": "User Registrations",
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "requestBody": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/register"
+                }
+              }
+            }
+          },
+          "responses": {}
+        }
+      },
+  
+      "/fetch-user": {
+        "get": {
+          "tags": ["Authentication"],
+          "summary": "User Authentication",
+          "description": "User Registrations",
+          "parameters": [
+            {
+              "name": "user_id",
+              "in": "query",
+              "description": "fetch ekyc results from ekyc portal",
+              "required": true,
+              "type": "number"
+            }
+          ],
+          "responses": {}
+        }
+      }
+    },
+    "definitions": {
+      "register": {
+        "type": "object",
+        "properties": {
+          "firstName": { "type": "string", "example": "usman" },
+          "lastName": { "type": "string", "example": "pasha" },
+          "email": { "type": "string", "example": "test@gmail.com" },
+          "phoneNumber": { "type": "string", "example": "9738286574" },
+          "password": { "type": "string", "example": "usman" }
+        }
+      }
+    }
+  }
+  

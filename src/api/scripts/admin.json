@@ -1,0 +1,26 @@
+{
+  "admins": [
+    {
+      "firstName": "admin",
+      "lastName": "One",
+      "password": "admin@Rest01",
+      "email": "admin@yahoo.com",
+      "phoneNumber": "9738286574",
+      "emailIsVerified": true,
+      "phoneIsVerified": true,
+      "accountType": "admin",
+      "status": "active"
+    },
+    {
+      "firstName": "admin",
+      "lastName": "Second",
+      "password": "admin@Rest02",
+      "email": "adminSec@yahoo.com",
+      "phoneNumber": "9838286574",
+      "emailIsVerified": true,
+      "phoneIsVerified": true,
+      "accountType": "admin",
+      "status": "active"
+    }
+  ]
+}

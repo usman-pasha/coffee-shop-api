@@ -20,4 +20,4 @@
 ---
 
 End Points
->Swagger | http://localhost:4000/api/v1/Docs/
+>Swagger | http://localhost:8080/api/v1/Docs/

@@ -1,4 +1,5 @@
 import mongoose, { ConnectOptions } from "mongoose";
+import config from "../config";
 
 const openDataBase = async () => {
   console.log(`Connecting to database`);
@@ -8,10 +9,7 @@ const openDataBase = async () => {
         // useNewUrlParser: true,
         // useUnifiedTopology: true,
       };
-      const connection = await mongoose.connect(
-        "mongodb://127.0.0.1:27017/coffee",
-        options
-      );
+      const connection = await mongoose.connect(config.DB_URI, options);
       console.log("Connected to MongoDB DataBase");
       return connection;
     } catch (err: any) {

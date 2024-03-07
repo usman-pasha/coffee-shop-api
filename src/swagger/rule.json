@@ -2,11 +2,11 @@
     "openapi": "3.0.3",
     "info": {
       "version": "1.0",
-      "title": "Node JS AND Mongoose database"
+      "title": "Coffee Shop Management System Api's"
     },
     "servers": [
       {
-        "url": "http://localhost:4000/api/v1"
+        "url": "http://localhost:8080/api/v1"
       }
     ],
     "components": {

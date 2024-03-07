@@ -25,7 +25,11 @@ app.options("*", cors());
 app.use(morgan("dev"));
 openDataBase();
 
-app.use("/Docs", SwaggerUi.serve, SwaggerUi.setup(swaggerDocs));
+app.use(
+  `/${apiSettings.api}/${apiSettings.version}/Docs`,
+  SwaggerUi.serve,
+  SwaggerUi.setup(swaggerDocs)
+);
 routes(app);
 
 app.get(

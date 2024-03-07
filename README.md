@@ -1,14 +1,23 @@
-# prisma-curd-api
+# Coffee Shop Management System Api's
 
-## Installing Steps
+## Project Installation Steps
 
-1. Run the following command to initialize Prisma:
+1. Run the Command To Install Dependencies:
 
    ```bash
-   npx prisma init
-2. Run Command To Generate Prisma 
+   npm install
+   ```
+
+2. Command To Run Project In Local
    ```bash
-   npx prisma generate
-3. Run Command To Migrate DataBase To Prisma 
+   npm run dev
+   ```
+3. Command To Run from Dist Folder
    ```bash
-   npx prisma migrate dev
+   npm run server
+   ```
+
+---
+
+End Points
+>Swagger | http://localhost:4000/api/v1/Docs/

@@ -9,7 +9,6 @@
     "watch-deploy": "nodemon dist/index.js",
     "server": "concurrently --handle-input \"npm run watch-tsc\" \"npm run watch-deploy\"",
     "start": "npm run deploy",
-    "heroku-postbuild": "npm run tsc",
     "dev": "nodemon --config nodemon.json src/index.ts",
     "build": "rimraf dist && concurrently --handle-input \" npm run tsc\" ",
     "start:dev": "rimraf dist && concurrently --handle-input \"wait-on dist/src/index.js && nodemon \" \"tsc -w -p tsconfig.json\""

@@ -1,6 +1,7 @@
-import mongoose, { model, Schema, Types } from "mongoose";
+import { model, Schema, Types, Document, PaginateModel } from "mongoose";
 
-export interface Category {
+import paginate from "mongoose-paginate-v2";
+export interface Category extends Document {
   id: string;
   categoryName: string;
   description: string;
@@ -15,4 +16,6 @@ const categorySchema = new Schema<Category>({
   updatedBy: { type: Schema.Types.ObjectId, ref: "admin" },
 });
 
-export const categoryModel = model<Category>("category", categorySchema);
+categorySchema.plugin(paginate);
+
+export const categoryModel: any = model<Category>("category", categorySchema);

@@ -14,7 +14,7 @@ class categoryController {
 
   async getAllCategories(req: Request, res: Response) {
     logger.info("get All Categories starting");
-    const data: any = await categoryService.getAllCategories();
+    const data: any = await categoryService.getAllCategories(req.query);
     return responser.send(
       200,
       "Successfully Fetched All Categories",

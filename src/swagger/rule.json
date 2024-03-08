@@ -97,6 +97,28 @@
         "tags": ["Category"],
         "summary": "Get All Categories",
         "description": "Get All Categories",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            },
+            "description": "Page number for pagination",
+            "required": false
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "10"
+            },
+            "description": "Number of items per page",
+            "required": false
+          }
+        ],
         "responses": {}
       }
     },

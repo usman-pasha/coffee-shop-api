@@ -11,7 +11,7 @@ export const verifyToken = catchError(
   async (req: Request | any, res: Response, next: NextFunction) => {
     try {
       await openDataBase();
-      const bearerHeader = req.headers.authorization;
+      const bearerHeader = req?.headers?.authorization;
       if (!bearerHeader) {
         throw new AppError(401, "Authorization header not found");
       }
@@ -39,15 +39,10 @@ export const verifyToken = catchError(
       };
 
       const user = await adminModel.findOne(condition, projection);
-      console.log("user", user);
-
       if (!user) {
-        throw new AppError(401, "Unauthorized");
+        throw new AppError(404, "User Not Found");
       }
       logger.data("user", user);
-      // res.locals.userId = userId;
-      // res.locals.accountType = user.accountType;
-      // res.locals.user = user;
       req.userId = userId;
       req.accountType = user?.accountType;
       req.user = user;
@@ -64,7 +59,7 @@ export const authorizePermissions = (...accountTypes: any) => {
     if (!accountTypes.includes(req.user.accountType)) {
       throw new AppError(
         401,
-        `Your ${res.locals.user.accountType}`,
+        `Your ${req.user.accountType}`,
         "Unauthorized to access this route"
       );
     }

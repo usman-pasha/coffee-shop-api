@@ -50,7 +50,7 @@ export const createAdmin = async () => {
 export const login = async (body: any) => {
   logger.info("login service started");
   if (!body.phone && !body.email) {
-    throw new AppError(400, "Email Or Username is Required");
+    throw new AppError(400, "Email Or Phone is Required");
   }
   const user = await adminModel.findOne({
     $or: [{ phoneNumber: body.phone }, { email: body.email }],
@@ -84,6 +84,24 @@ export const login = async (body: any) => {
     phoneNumber: loggedInUser.phoneNumber,
     accessToken,
     refreshToken,
+  };
+  return record;
+};
+
+export const getAdminProfile = async (loggedIn: any) => {
+  logger.info("current user service started");
+  const condition: object = {
+    _id: loggedIn._id,
+  };
+  const loggedInUser = await adminModel.findOne(condition);
+  const record = {
+    _id: loggedInUser._id,
+    userName: loggedInUser.userName,
+    fullName: `${loggedInUser.firstName}-${loggedInUser.lastName}`,
+    email: loggedInUser.email,
+    status: loggedInUser.status,
+    accountType: loggedInUser.accountType,
+    phoneNumber: loggedInUser.phoneNumber,
   };
   return record;
 };

@@ -10,5 +10,8 @@ const adminRouter = Router();
 
 adminRouter.route("/").get(catchError(adminController.adminRegister));
 adminRouter.route("/login").post(catchError(adminController.adminLogin));
+adminRouter
+  .route("/profile")
+  .get(verifyToken, catchError(adminController.getAdminProfile));
 
 export default adminRouter;

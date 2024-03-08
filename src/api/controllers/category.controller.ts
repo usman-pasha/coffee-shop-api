@@ -29,7 +29,7 @@ class categoryController {
     const data: any = await categoryService.getOneCategory(params);
     return responser.send(
       200,
-      "Successfully Fetched One Categories",
+      "Successfully Fetched Single Category",
       req,
       res,
       data

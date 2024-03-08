@@ -16,3 +16,11 @@ export const adminLogin = async (req: Request, res: Response) => {
   logger.info(data);
   return responser.send(200, "Admin Login Successfully", req, res, data);
 };
+
+export const getAdminProfile = async (req: Request | any, res: Response) => {
+  logger.info("admin profile starting");
+  const loggedIn: any = req.user;
+  const data: any = await adminService.getAdminProfile(loggedIn);
+  logger.info(data);
+  return responser.send(200, "Admin Profile Fetched", req, res, data);
+};

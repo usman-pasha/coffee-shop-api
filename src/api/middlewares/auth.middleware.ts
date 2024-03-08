@@ -9,56 +9,59 @@ import { adminModel } from "../model/admin.model";
 
 export const verifyToken = catchError(
   async (req: Request | any, res: Response, next: NextFunction) => {
-    await openDataBase();
-    const bearerHeader = req.headers.authorization;
-    if (!bearerHeader) {
-      throw new AppError(401, "Authorization header not found");
-    }
+    try {
+      await openDataBase();
+      const bearerHeader = req.headers.authorization;
+      if (!bearerHeader) {
+        throw new AppError(401, "Authorization header not found");
+      }
 
-    const bearerToken = bearerHeader.split(" ")[1];
-    logger.data("token", bearerToken);
+      const bearerToken = bearerHeader.split(" ")[1];
+      logger.data("token", bearerToken);
 
-    const decoded: any = jwt.verify(bearerToken, config.jwt.accessSecretKey);
-    logger.data("decoded", decoded);
+      const decoded: any = jwt.verify(bearerToken, config.jwt.accessSecretKey);
+      logger.data("decoded", decoded);
 
-    const createdate = new Date(decoded.iat * 1000);
-    logger.data("createdate", createdate);
+      const createdate = new Date(decoded.iat * 1000);
+      logger.data("createdate", createdate);
 
-    const expires = new Date(decoded.exp * 1000);
-    logger.data("expires", expires);
+      const expires = new Date(decoded.exp * 1000);
+      logger.data("expires", expires);
 
-    const userId = decoded.id;
-
-    const query = {
-      where: {
+      const userId = decoded.id;
+      const condition = {
         _id: userId,
-      },
-      select: {
+      };
+      const projection = {
         _id: true,
         accountType: true,
         userName: true,
-      },
-    };
+      };
 
-    const user = await adminModel.findOne(query);
-    if (!user) {
-      throw new AppError(401, "Unauthorized");
+      const user = await adminModel.findOne(condition, projection);
+      console.log("user", user);
+
+      if (!user) {
+        throw new AppError(401, "Unauthorized");
+      }
+      logger.data("user", user);
+      // res.locals.userId = userId;
+      // res.locals.accountType = user.accountType;
+      // res.locals.user = user;
+      req.userId = userId;
+      req.accountType = user?.accountType;
+      req.user = user;
+      next();
+    } catch (error: any) {
+      throw new AppError(401, error?.message);
     }
-    logger.data("user", user);
-    // res.locals.userId = userId;
-    // res.locals.accountType = user.accountType;
-    // res.locals.user = user;
-    req.userId = userId;
-    req.accountType = user.accountType;
-    req.user = user;
-    next();
   }
 );
 
 //
 export const authorizePermissions = (...accountTypes: any) => {
-  return (req: Request, res: Response, next: NextFunction) => {
-    if (!accountTypes.includes(res.locals.user.accountType)) {
+  return (req: Request | any, res: Response, next: NextFunction) => {
+    if (!accountTypes.includes(req.user.accountType)) {
       throw new AppError(
         401,
         `Your ${res.locals.user.accountType}`,

@@ -140,6 +140,145 @@
         ],
         "responses": {}
       }
+    },
+
+    "/product/create": {
+      "post": {
+        "tags": ["Product"],
+        "summary": "Create Product",
+        "description": "Create Product",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/createProduct"
+              }
+            }
+          }
+        },
+        "responses": {}
+      }
+    },
+    "/product/getAllProduct": {
+      "get": {
+        "tags": ["Product"],
+        "summary": "Get All Products",
+        "description": "Get All Products",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            },
+            "description": "Page number for pagination",
+            "required": false
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "10"
+            },
+            "description": "Number of items per page",
+            "required": false
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/product/getOneProduct/{productId}": {
+      "get": {
+        "tags": ["Product"],
+        "summary": "Get Single Product",
+        "description": "Get Single Product",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "Product ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/product/updateProduct/{productId}": {
+      "patch": {
+        "tags": ["Product"],
+        "summary": "Update Single Product",
+        "description": "Update Single Product",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "Product ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "which field want that single or multiple fileds can be update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/createProduct"
+              }
+            }
+          }
+        },
+        "responses": {}
+      }
+    },
+    "/product/deleteProduct/{productId}": {
+      "delete": {
+        "tags": ["Product"],
+        "summary": "delete Single Product",
+        "description": "delete Single Product",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "Product ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/product/featuredProduct": {
+      "get": {
+        "tags": ["Product"],
+        "summary": "featured Products",
+        "description": "featured Products",
+        "responses": {}
+      }
     }
   },
 
@@ -157,6 +296,20 @@
       "properties": {
         "categoryName": { "type": "string", "example": "Coffee" },
         "description": { "type": "string", "example": "coffee is good" }
+      }
+    },
+    "createProduct": {
+      "type": "object",
+      "properties": {
+        "productName": { "type": "string", "example": "Black Coffee" },
+        "description": { "type": "string", "example": "coffee is good" },
+        "categoryId": {
+          "type": "string",
+          "example": "65edf807c70e092c2a8b51b4"
+        },
+        "amount": { "type": "number", "example": 25.7 },
+        "quantity": { "type": "number", "example": 10 },
+        "featured": { "type": "boolean", "example": true }
       }
     }
   }

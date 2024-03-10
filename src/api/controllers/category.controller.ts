@@ -23,6 +23,7 @@ class categoryController {
       data
     );
   }
+
   async getOneCategory(req: Request, res: Response) {
     logger.info("get One Category starting");
     const params = req.params.cateId;
@@ -35,6 +36,22 @@ class categoryController {
       data
     );
   }
+
+  updateCategory = async (req: Request | any, res: Response) => {
+    logger.info("Update Category starting");
+    const reqData = req.body;
+    reqData.userId = req.userId;
+    const params = req.params.categoryId;
+    const data: any = await categoryService.updateCategory(params, reqData);
+    return responser.send(200, "Successfully Category Updated", req, res, data);
+  };
+
+  deleteCategory = async (req: Request, res: Response) => {
+    logger.info("Delete Category starting");
+    const params = req.params.categoryId;
+    const data: any = await categoryService.deleteCategory(params);
+    return responser.send(200, "Successfully Category Deleted", req, res, data);
+  };
 }
 
 export default new categoryController();

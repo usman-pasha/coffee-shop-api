@@ -2,6 +2,7 @@ import APIFeatures from "../core/apiFeature";
 import AppError from "../core/appError";
 import logger from "../core/log";
 import { categoryModel } from "../model/category.model";
+const { ObjectId } = require("mongodb");
 
 class categoryService {
   async createCategory(body: any) {
@@ -43,6 +44,36 @@ class categoryService {
       .findOne({ _id: categoryId })
       .populate(populateQuery);
     return record;
+  }
+
+  async updateCategory(categoryId: any, body: any) {
+    logger.info("update category");
+    let updateData: any = {
+      updatedBy: body.userId,
+    };
+    const condition = {
+      _id: new ObjectId(categoryId),
+    };
+    const category = await categoryModel.findOne(condition);
+    if (!category) throw new AppError(404, "Category is not found");
+    if (body.categoryName) updateData.categoryName = body.categoryName;
+    if (body.description) updateData.description = body.description;
+    logger.data("payload", updateData);
+    const option = { new: true };
+    const record: any | null = await categoryModel.findOneAndUpdate(
+      { _id: category._id },
+      updateData,
+      option
+    );
+    return record;
+  }
+
+  async deleteCategory(categoryId: any) {
+    logger.info("delete category");
+    const condition: any = { _id: new ObjectId(categoryId) };
+    const record: any = await categoryModel.findOneAndDelete(condition);
+    if (!record) throw new AppError(404, "Category is not found");
+    return true;
   }
 }
 

@@ -141,6 +141,64 @@
         "responses": {}
       }
     },
+    "/category/update/{categoryId}": {
+      "patch": {
+        "tags": ["Category"],
+        "summary": "Upadte Single Category",
+        "description": "Get Single Category",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "description": "Category ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "which field want that single or multiple fileds can be update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/cate-create"
+              }
+            }
+          }
+        },
+        "responses": {}
+      }
+    },
+    "/category/delete/{categoryId}": {
+      "delete": {
+        "tags": ["Category"],
+        "summary": "delete Single Category",
+        "description": "delete Single Category",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "description": "category ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
 
     "/product/create": {
       "post": {

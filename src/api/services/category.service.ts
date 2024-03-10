@@ -1,3 +1,4 @@
+import APIFeatures from "../core/apiFeature";
 import AppError from "../core/appError";
 import logger from "../core/log";
 import { categoryModel } from "../model/category.model";
@@ -16,16 +17,20 @@ class categoryService {
     return record;
   }
 
-  async getAllCategories() {
+  async getAllCategories(query: any) {
     logger.info("get all categories");
     const populateQuery = [
       { path: "createdBy", select: ["_id", "email", "userName"] },
       { path: "updatedBy", select: ["_id", "email", "userName"] },
     ];
-    const record: any | null = await categoryModel
-      .find({})
-      .populate(populateQuery);
-    return record;
+    const record = await new APIFeatures(query)
+      .filters()
+      .orRegexFieldSearch("searchFilter", query)
+      .sort()
+      .paginate()
+      .populate(populateQuery)
+      .exec(categoryModel);
+    return record.data;
   }
 
   async getOneCategory(categoryId: any) {

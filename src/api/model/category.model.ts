@@ -1,18 +1,25 @@
-import mongoose, { model, Schema, Types } from "mongoose";
-
-export interface Category {
-  id: string;
+import { model, Schema, Document, PaginateModel } from "mongoose";
+import paginate from "mongoose-paginate-v2";
+export interface Category extends Document {
   categoryName: string;
   description: string;
-  createdBy: string | Types.ObjectId;
-  updatedBy: string | Types.ObjectId;
+  createdBy: string | Schema.Types.ObjectId;
+  updatedBy: string | Schema.Types.ObjectId;
 }
 
-const categorySchema = new Schema<Category>({
-  categoryName: { type: String, required: true },
-  description: { type: String, required: true },
-  createdBy: { type: Schema.Types.ObjectId, ref: "admin" },
-  updatedBy: { type: Schema.Types.ObjectId, ref: "admin" },
-});
+const categorySchema = new Schema<Category>(
+  {
+    categoryName: { type: String, required: true },
+    description: { type: String, required: true },
+    createdBy: { type: Schema.Types.ObjectId, ref: "admin" },
+    updatedBy: { type: Schema.Types.ObjectId, ref: "admin" },
+  },
+  { timestamps: true }
+);
 
-export const categoryModel = model<Category>("category", categorySchema);
+categorySchema.plugin(paginate);
+
+export const categoryModel: PaginateModel<Category> = model<
+  Category,
+  PaginateModel<Category>
+>("category", categorySchema);
